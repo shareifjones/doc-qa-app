@@ -1,0 +1,10 @@
+Acme Corporation Employee Handbook
+
+Vacation Policy:
+Full-time employees receive 15 days of paid vacation per year. Part-time employees receive 7 days. Vacation days must be approved by a manager at least 2 weeks in advance.
+
+Remote Work Policy:
+Employees may work remotely up to 3 days per week. All remote workers must be available during core hours of 10am-3pm EST.
+
+Health Benefits:
+The company covers 80% of health insurance premiums for full-time employees. Dental and vision are included. Benefits begin after 90 days of employment.
