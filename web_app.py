@@ -3,6 +3,9 @@ import os
 from dotenv import load_dotenv
 import anthropic
 import markdown
+from docx import Document
+import pdfplumber
+import io
 
 load_dotenv()
 
@@ -24,8 +27,20 @@ def ask():
     file = request.files["document"]
     # grabs the typed question from the form
     question = request.form["question"]
-    # converts the file from raw bytes into readable text
-    document = file.read().decode("utf-8")
+
+    filename = file.filename.lower()
+    file_bytes = file.read()
+
+    if filename.endswith(".txt"):
+        document = file_bytes.decode("utf-8")
+    elif filename.endswith(".docx"):
+        doc = Document(io.BytesIO(file_bytes))
+        document = "\n".join([para.text for para in doc.paragraphs])
+    elif filename.endswith(".pdf"):
+        with pdfplumber.open(io.BytesIO(file_bytes)) as pdf:
+            document = "\n".join([page.extract_text() or "" for page in pdf.pages])
+    else:
+        return render_template("index.html", answer="Unsupported file type. Please upload a .txt, .docx, or .pdf file.")
 
     message = client.messages.create(
         model="claude-sonnet-4-6",
